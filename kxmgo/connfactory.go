@@ -1,12 +1,12 @@
 package kxmgo
 
 import (
+	"github.com/Keyang/golibs/kxlog"
 	"gopkg.in/mgo.v2"
-	"keyangxiang.com/libs/kxlog"
 )
 
 var (
-	conns map[string]*mgo.Session
+	conns map[string]*Mgo
 )
 
 //Connect to a mongodb using connection string.
@@ -18,9 +18,9 @@ func AddConnect(connStr string) error {
 			return err
 		}
 		if conns == nil {
-			conns = map[string]*mgo.Session{}
+			conns = map[string]*Mgo{}
 		}
-		conns[connStr] = conn
+		conns[connStr] = &Mgo{Conn: conn}
 		kxlog.I("Successfully connected to: %s", connStr)
 	} else {
 		kxlog.I("%s is already existed in Mongodb Connection pool. Skip the operation.", connStr)
@@ -30,11 +30,8 @@ func AddConnect(connStr string) error {
 
 //Get a mgo.Session copy of existing connection from connection pool
 func GetMgo(connStr string) *Mgo {
-	if conn, ok := conns[connStr]; ok == true {
-		conn_copy := conn.Copy()
-		return &Mgo{
-			Conn: conn_copy,
-		}
+	if m, ok := conns[connStr]; ok == true {
+		return m
 	} else {
 		kxlog.W("%s cannot be found in mongodb connection pool.", connStr)
 		err := AddConnect(connStr)

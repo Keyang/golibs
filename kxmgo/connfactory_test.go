@@ -20,7 +20,6 @@ func TestConnFactory_GetMgo(t *testing.T) {
 		t.Fatal(err)
 	}
 	mgo := GetMgo(testDb)
-	defer mgo.Close()
 	if mgo == nil {
 		t.Fatal("mgo should not be nil")
 	}

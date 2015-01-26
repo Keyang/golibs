@@ -24,7 +24,6 @@ func init() {
 }
 func TestMongoDb_AddFindOneFindByIdRemove(t *testing.T) {
 	m := GetMgo(testDb)
-	defer m.Close()
 	obj := TestObj{
 		Id:     NewId(),
 		FieldA: "Hello",
@@ -77,7 +76,6 @@ func TestMongoDb_AddFindOneFindByIdRemove(t *testing.T) {
 
 func TestMgo_FindAllCountFindBy(t *testing.T) {
 	m := GetMgo(testDb)
-	defer m.Close()
 	objA := TestObj{
 		Id:     NewId(),
 		FieldA: "Hello",

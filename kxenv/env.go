@@ -3,7 +3,7 @@ package kxenv
 import (
 	"os"
 
-	"keyangxiang.com/libs/kxlog"
+	"github.com/Keyang/golibs/kxlog"
 )
 
 var (
